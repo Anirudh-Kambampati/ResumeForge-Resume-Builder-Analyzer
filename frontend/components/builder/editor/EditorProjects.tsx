@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Resume, Project } from "@/types/resume";
 import { Plus, Trash, ChevronDown, ChevronUp, Sparkles, Check, X, AlertCircle } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import { normalizeError } from "@/lib/errorHelper";
 import { apiPostJson } from "@/lib/api";
 import { getProjectLinkInfo } from "@/lib/projectLinks";
@@ -428,7 +429,7 @@ export default function EditorProjects({ resume, setResume }: Props) {
                             </div>
 
                             {isImproving && (
-                              <p className="text-xs text-blue-400 animate-pulse pl-5">Improving bullet with AI...</p>
+                              <p className="flex items-center gap-2 text-xs text-blue-400 pl-5"><ForgeLoader className="h-4 w-4" />Improving bullet with AI...</p>
                             )}
 
                             {hasSuggestion && (

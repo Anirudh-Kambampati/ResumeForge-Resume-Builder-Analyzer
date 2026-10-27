@@ -1,6 +1,7 @@
 "use client";
 
-import { AlertTriangle, CheckCircle2, Loader2, MessageSquareQuote, RefreshCw, Sparkles } from "lucide-react";
+import { AlertTriangle, CheckCircle2, MessageSquareQuote, RefreshCw, Sparkles } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import type { Candidate } from "@/types/screening";
 import { useScreeningStore } from "@/store/screeningStore";
 
@@ -131,7 +132,7 @@ export default function CandidateDetail({ queueId, candidate }: { queueId: strin
 
         {(candidate.briefStatus === "queued" || candidate.briefStatus === "loading") && (
           <p className="flex items-center gap-2 text-sm text-zinc-400">
-            <Loader2 size={15} className="animate-spin" />
+            <ForgeLoader className="h-4 w-4" />
             {candidate.briefStatus === "queued" ? "Waiting for a free slot…" : "Writing brief…"}
           </p>
         )}

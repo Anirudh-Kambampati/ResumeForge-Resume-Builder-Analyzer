@@ -731,3 +731,70 @@ body:has(#analyzer-workspace) {
     transition: none;
   }
 }
+
+/* ------------------------------------------------ */
+/* Loader (components/ui/ForgeLoader): the sheet     */
+/* hops with squash and stretch, blinks, highlights  */
+/* its line and pops a spark at the top of the hop.  */
+/* ------------------------------------------------ */
+
+.rf-loader svg * {
+  transform-box: fill-box;
+}
+.rf-loader-ground {
+  fill: var(--muted);
+  opacity: 0.3;
+  transform-origin: center;
+  animation: rf-loader-ground 0.9s ease-in-out infinite;
+}
+.rf-loader-body {
+  transform-origin: 50% 100%;
+  animation: rf-loader-hop 0.9s ease-in-out infinite;
+}
+.rf-loader-eyes {
+  transform-origin: center;
+  animation: rf-loader-blink 2.7s ease-in-out infinite;
+}
+.rf-loader-hl {
+  transform-origin: left center;
+  animation: rf-loader-hl 1.8s ease-in-out infinite;
+}
+.rf-loader-spark {
+  transform-origin: center;
+  animation: rf-loader-spark 0.9s ease-out infinite;
+}
+@keyframes rf-loader-hop {
+  0%, 100% { transform: translateY(0) scale(1.1, 0.88); }
+  35% { transform: translateY(-20%) scale(0.94, 1.06) rotate(-4deg); }
+  50% { transform: translateY(-24%) scale(1) rotate(3deg); }
+  80% { transform: translateY(-4%) scale(0.97, 1.03); }
+}
+@keyframes rf-loader-ground {
+  0%, 100% { transform: scaleX(1.1); opacity: 0.35; }
+  50% { transform: scaleX(0.55); opacity: 0.15; }
+}
+@keyframes rf-loader-blink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  92% { transform: scaleY(0.1); }
+}
+@keyframes rf-loader-hl {
+  0% { transform: scaleX(0); opacity: 1; }
+  50%, 85% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+@keyframes rf-loader-spark {
+  0%, 30% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1.2) rotate(45deg); opacity: 1; }
+  75%, 100% { transform: scale(0.4) rotate(90deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rf-loader-body,
+  .rf-loader-ground,
+  .rf-loader-hl,
+  .rf-loader-spark {
+    animation: none;
+  }
+  .rf-loader-spark {
+    opacity: 0;
+  }
+}

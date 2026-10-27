@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Resume } from "@/types/resume";
 import { Plus, Trash, ChevronDown, ChevronUp, Sparkles, Check, X, AlertCircle } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import MoveButtons, { moveItem } from "@/components/ui/MoveButtons";
 import { normalizeError } from "@/lib/errorHelper";
 import { apiPostJson } from "@/lib/api";
@@ -388,7 +389,7 @@ export default function GenericEntryEditor({ resume, setResume, config }: Props)
                               </div>
 
                               {isImproving && (
-                                <p className="text-xs text-blue-400 animate-pulse pl-5">Improving with AI...</p>
+                                <p className="flex items-center gap-2 text-xs text-blue-400 pl-5"><ForgeLoader className="h-4 w-4" />Improving with AI...</p>
                               )}
 
                               {hasSuggestion && (

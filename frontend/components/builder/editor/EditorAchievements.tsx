@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Resume, Achievement } from "@/types/resume";
 import { Plus, Trash, ChevronDown, ChevronUp, Sparkles, Check, X, AlertCircle } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import MoveButtons, { moveItem } from "@/components/ui/MoveButtons";
 import { normalizeError } from "@/lib/errorHelper";
 import { apiPostJson } from "@/lib/api";
@@ -245,7 +246,7 @@ export default function EditorAchievements({ resume, setResume }: Props) {
                     </div>
 
                     {improvingId === safeId && (
-                      <p className="text-xs text-blue-400 animate-pulse pt-1">Refining achievement with AI...</p>
+                      <p className="flex items-center gap-2 text-xs text-blue-400 pt-1"><ForgeLoader className="h-4 w-4" />Refining achievement with AI...</p>
                     )}
 
                     {aiSuggestion?.id === safeId && (

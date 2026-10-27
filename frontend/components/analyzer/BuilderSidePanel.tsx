@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AlertTriangle, ArrowRight, Check, Loader2, RotateCcw, Undo2, X } from "lucide-react";
+import { AlertTriangle, ArrowRight, Check, RotateCcw, Undo2, X } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import BuilderPreview from "@/components/builder/BuilderPreview";
 import { useResumeStore } from "@/store/resumeStore";
 import { locationLabel, locationSection, type ImprovedBullet } from "@/lib/analysis";
@@ -160,8 +161,7 @@ export default function BuilderSidePanel({ open, onClose, applier, bullets }: Pr
         <div className="relative min-h-0 flex-1">
           {status === "loading" && (
             <div className="flex h-full flex-col items-center justify-center gap-3 bg-canvas text-sm text-zinc-400">
-              <Loader2 size={22} className="animate-spin text-pencil" />
-              Reading your resume into the builder…
+              <ForgeLoader label="Reading your resume into the builder…" />
             </div>
           )}
           {status === "error" && (

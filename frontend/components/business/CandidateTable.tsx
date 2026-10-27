@@ -1,7 +1,8 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { AlertTriangle, ChevronDown, Clock, Loader2, Sparkles, Trash2 } from "lucide-react";
+import { AlertTriangle, ChevronDown, Clock, Sparkles, Trash2 } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import type { ScreeningQueue } from "@/types/screening";
 import { candidateDisplayName, rankCandidates, scoreSticker } from "@/lib/screening";
 import { useScreeningStore } from "@/store/screeningStore";
@@ -57,7 +58,7 @@ export default function CandidateTable({ queue }: { queue: ScreeningQueue }) {
                   <span className="truncate">{candidateDisplayName(c)}</span>
                   {c.briefStatus === "done" && <Sparkles size={12} className="shrink-0 text-purple-400" aria-label="Brief ready" />}
                   {(c.briefStatus === "queued" || c.briefStatus === "loading") && (
-                    <Loader2 size={12} className="shrink-0 animate-spin text-purple-400" aria-label="Writing brief" />
+                    <ForgeLoader className="h-4 w-4" srLabel="Writing brief" />
                   )}
                 </p>
                 <p className="truncate text-xs text-zinc-500">
@@ -75,7 +76,7 @@ export default function CandidateTable({ queue }: { queue: ScreeningQueue }) {
                 {r ? (
                   <span className={`ml-auto h-11 w-11 text-xl shadow-none ${scoreSticker(r.match_score)}`}>{r.match_score}</span>
                 ) : c.status === "screening" ? (
-                  <Loader2 size={16} className="ml-auto animate-spin text-blue-400" />
+                  <ForgeLoader className="h-4 w-4" />
                 ) : c.status === "queued" ? (
                   <Clock size={15} className="ml-auto text-zinc-600" aria-label="Queued" />
                 ) : (
@@ -93,7 +94,7 @@ export default function CandidateTable({ queue }: { queue: ScreeningQueue }) {
               <div className="hidden min-w-0 items-center gap-1.5 md:flex">
                 {(c.summaryStatus === "loading" || c.summaryStatus === "queued") && (
                   <span className="flex items-center gap-1.5 text-[11px] text-zinc-500">
-                    <Loader2 size={11} className="shrink-0 animate-spin text-purple-400" aria-label="Writing summary" />
+                    <ForgeLoader className="h-4 w-4" />
                     <span className="truncate">Summarizing…</span>
                   </span>
                 )}

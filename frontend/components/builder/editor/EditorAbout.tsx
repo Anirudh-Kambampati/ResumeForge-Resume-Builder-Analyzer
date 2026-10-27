@@ -13,6 +13,7 @@ import {
   ChevronUp,
   ChevronDown,
 } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import { normalizeError } from "@/lib/errorHelper";
 import { apiPostJson } from "@/lib/api";
 import { detectPlatform, extractUsername, normalizeUrl } from "@/lib/contactLinks";
@@ -483,7 +484,7 @@ export default function EditorAbout({ resume, setResume }: Props) {
                 disabled={summaryLoading || !summaryText.trim()}
                 className="flex items-center gap-2 rounded-xl bg-blue-600/10 border border-blue-500/20 px-4 py-2 text-sm font-medium text-blue-400 transition hover:bg-blue-600 hover:text-on-accent disabled:opacity-40 disabled:hover:bg-blue-600/10 disabled:hover:text-blue-400"
               >
-                <Sparkles size={14} />
+                {summaryLoading ? <ForgeLoader className="h-4 w-4" /> : <Sparkles size={14} />}
                 {summaryLoading ? "Improving..." : "Improve with AI"}
               </button>
             </div>

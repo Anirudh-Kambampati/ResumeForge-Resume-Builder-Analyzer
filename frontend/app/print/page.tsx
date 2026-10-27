@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ResumePage from "@/components/builder/preview/ResumePage";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import { Resume } from "@/types/resume";
 import type { BuilderSection } from "@/store/resumeStore";
 
@@ -57,8 +58,8 @@ export default function PrintPage() {
 
   if (!resume) {
     return (
-      <div className="flex h-screen items-center justify-center bg-zinc-100 text-zinc-500">
-        Loading resume for printing...
+      <div className="flex h-screen items-center justify-center bg-app">
+        <ForgeLoader label="Preparing your resume for print…" />
       </div>
     );
   }

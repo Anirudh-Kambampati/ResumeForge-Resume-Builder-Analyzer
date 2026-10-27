@@ -16,11 +16,11 @@ export default function ClearableTextarea({
   const hasValue = typeof value === "string" && value.trim().length > 0;
 
   return (
-    <div className="relative">
+    <div className="relative w-full min-w-0">
       <textarea
         value={value}
         onChange={onChange}
-        className={`w-full rounded-lg border border-white/10 bg-panel px-3 py-2 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ${className}`}
+        className={`w-full rounded-lg border border-white/10 bg-panel px-3 py-2 pr-8 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ${className}`}
         {...props}
       />
       {hasValue && onClear && (

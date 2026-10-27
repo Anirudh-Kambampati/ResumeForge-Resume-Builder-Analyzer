@@ -5,11 +5,11 @@ import {
   RotateCcw,
   CloudCheck,
   CloudLightning,
-  Loader2,
   Menu,
   Sparkles,
   Import,
 } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import { useCallback, useRef, useState } from "react";
 import { pdf } from "@react-pdf/renderer";
 import { ResumePDFDocument } from "./preview/ResumePDFDocument";
@@ -269,7 +269,7 @@ export default function BuilderTopbar({
           "
         >
           {importStatus === "loading" ? (
-            <Loader2 className="animate-spin" size={16} />
+            <ForgeLoader className="h-4 w-4" />
           ) : (
             <Import size={16} />
           )}
@@ -350,7 +350,7 @@ export default function BuilderTopbar({
           "
         >
           {isDownloading ? (
-            <Loader2 className="animate-spin" size={16} />
+            <ForgeLoader className="h-4 w-4" />
           ) : (
             <Download size={16} />
           )}

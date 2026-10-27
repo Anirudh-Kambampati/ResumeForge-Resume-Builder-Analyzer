@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Upload,
-  FileText,
+  Upload,
   CheckCircle2,
   AlertCircle,
   ArrowLeft,
 } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import { useResumeImport, RESUME_ACCEPT_ATTRIBUTE } from "@/lib/useResumeImport";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import AiKeyButton from "@/components/ai/AiKeyButton";
@@ -209,13 +209,7 @@ export default function ImportPage() {
                 transition={{ duration: 0.25 }}
                 className="flex flex-col items-center py-8"
               >
-                {/* Animated spinner */}
-                <div className="relative mb-6">
-                  <div className="h-20 w-20 animate-spin rounded-full border-4 border-zinc-800 border-t-pencil" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <FileText size={24} className="text-blue-400" />
-                  </div>
-                </div>
+                <ForgeLoader className="mb-6 h-20 w-20" />
 
                 <p className="text-base font-bold text-zinc-200">
                   {fileName}

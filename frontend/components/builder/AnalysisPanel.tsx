@@ -8,12 +8,12 @@ import {
   Check,
   CheckCircle2,
   Copy,
-  Loader2,
   RefreshCw,
   Sparkles,
   Undo2,
   X,
 } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import { ResumePDFDocument } from "./preview/ResumePDFDocument";
 import { useResumeStore } from "@/store/resumeStore";
 import { apiPostForm } from "@/lib/api";
@@ -156,9 +156,9 @@ export default function AnalysisPanel({ onClose }: Props) {
         )}
 
         {status === "loading" && (
-          <div className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-6 text-sm text-zinc-400">
-            <Loader2 size={16} className="animate-spin" />
-            Analyzing your resume… this can take up to a minute.
+          <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-6 text-center text-sm text-zinc-400">
+            <ForgeLoader label="Analyzing your resume…" />
+            This can take up to a minute.
           </div>
         )}
 

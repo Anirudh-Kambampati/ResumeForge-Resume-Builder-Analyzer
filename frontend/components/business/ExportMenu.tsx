@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Download, FileSpreadsheet, FileText, Loader2, Sheet } from "lucide-react";
+import { ChevronDown, Download, FileSpreadsheet, FileText, Sheet } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import type { ScreeningQueue } from "@/types/screening";
 import { downloadCsv } from "@/lib/screening";
 
@@ -60,7 +61,7 @@ export default function ExportMenu({ queue, disabled, className }: { queue: Scre
         aria-haspopup="menu"
         aria-expanded={open}
       >
-        {busy ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
+        {busy ? <ForgeLoader className="h-4 w-4" /> : <Download size={14} />}
         {busy ? "Exporting…" : "Export"}
         <ChevronDown size={13} className={`transition-transform ${open ? "rotate-180" : ""}`} />
       </button>

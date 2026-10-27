@@ -6,6 +6,7 @@ import BuilderTopbar from "./BuilderTopbar";
 import BuilderEditor from "./BuilderEditor";
 import BuilderPreview from "./BuilderPreview";
 import AnalysisPanel from "./AnalysisPanel";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 
 import { useResumeStore } from "@/store/resumeStore";
 import { getLayoutSections } from "@/config/layouts";
@@ -108,10 +109,7 @@ export default function BuilderWorkspace() {
   if (!initialLoadDone) {
     return (
       <main className="flex h-dvh items-center justify-center bg-app">
-        <div className="flex items-center gap-3 text-zinc-600">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-zinc-700 border-t-zinc-400" />
-          <span className="text-sm">Loading resume…</span>
-        </div>
+        <ForgeLoader label="Loading resume…" />
       </main>
     );
   }

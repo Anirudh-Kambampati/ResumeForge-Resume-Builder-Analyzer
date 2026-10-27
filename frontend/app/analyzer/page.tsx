@@ -13,6 +13,7 @@ import {
   ArrowLeft,
   Info
 } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import { normalizeError } from "@/lib/errorHelper";
 import { API_BASE_URL, ApiError, apiHeaders, toApiError } from "@/lib/api";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -316,7 +317,7 @@ export default function AnalyzerPage() {
                 >
                   {loading ? (
                     <>
-                      <RefreshCw className="animate-spin" size={18} />
+                      <ForgeLoader className="h-5 w-5" />
                       Analyzing compliance...
                     </>
                   ) : (

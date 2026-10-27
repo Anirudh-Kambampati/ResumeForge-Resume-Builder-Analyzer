@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CheckCircle2, ExternalLink, KeyRound, Loader2, ShieldCheck, X } from "lucide-react";
+import { CheckCircle2, ExternalLink, KeyRound, ShieldCheck, X } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import {
   BYOK_PROVIDERS,
   byokHeaders,
@@ -252,7 +253,7 @@ function AiKeyPanel() {
                 check.status === "ok" ? "text-green-400" : check.status === "error" ? "text-red-400" : "text-zinc-400"
               }`}
             >
-              {check.status === "checking" && <Loader2 size={13} className="mt-0.5 animate-spin" />}
+              {check.status === "checking" && <ForgeLoader className="h-4 w-4" />}
               {check.status === "ok" && <CheckCircle2 size={13} className="mt-0.5" />}
               {check.status === "checking" ? "Checking key…" : check.message}
             </p>

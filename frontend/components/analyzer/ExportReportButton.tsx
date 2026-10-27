@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { FileDown, Loader2 } from "lucide-react";
+import { FileDown } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import type { AnalysisReportData } from "./AnalysisReportPDF";
 
 /** Download the analysis as a PDF report. The PDF builder loads on first click. */
@@ -36,7 +37,7 @@ export default function ExportReportButton({
   return (
     <div className="relative">
       <button type="button" onClick={run} disabled={busy} className={`rf-btn gap-1.5 px-3 text-sm ${className}`}>
-        {busy ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />}
+        {busy ? <ForgeLoader className="h-4 w-4" /> : <FileDown size={14} />}
         {busy ? "Building PDF…" : "Export PDF"}
       </button>
       {error && <p className="absolute right-0 mt-1 whitespace-nowrap text-xs text-red-400">{error}</p>}

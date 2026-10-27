@@ -5,7 +5,6 @@ import {
   AlertTriangle,
   Eraser,
   KeyRound,
-  Loader2,
   Pause,
   Play,
   RefreshCw,
@@ -13,6 +12,7 @@ import {
   Sparkles,
   Trash2,
 } from "lucide-react";
+import ForgeLoader from "@/components/ui/ForgeLoader";
 import type { ScreeningQueue } from "@/types/screening";
 import { MIN_JOB_DESCRIPTION_CHARS, queueProgress } from "@/lib/screening";
 import { useScreeningStore, clearPersistedScreening } from "@/store/screeningStore";
@@ -103,7 +103,7 @@ export default function QueueWorkspace({ queue }: { queue: ScreeningQueue }) {
             }`}
           >
             {loadingRequirements ? (
-              <Loader2 size={15} className="animate-spin" />
+              <ForgeLoader className="h-4 w-4" />
             ) : queue.requirements ? (
               <RefreshCw size={14} />
             ) : (
