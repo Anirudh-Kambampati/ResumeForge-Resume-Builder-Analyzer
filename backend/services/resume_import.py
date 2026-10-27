@@ -95,11 +95,11 @@ def guard_reviewed(
         unsupported += 1
         return False
 
-    # Profile scalars: fall back to the draft's value when unsupported
+    # Profile scalars: fall back to the draft's value when unsupported or dropped
     profile = result.get("profile") or {}
     draft_profile = draft.get("profile") or {}
     for key in ("fullName", "email", "phone", "location"):
-        if not keep(profile.get(key, "")):
+        if not str(profile.get(key) or "").strip() or not keep(profile.get(key, "")):
             profile[key] = draft_profile.get(key, "")
     profile["titles"] = [t for t in profile.get("titles") or [] if keep(t)]
     # Links: the URL (minus scheme/www, which post-processing may add) must be in the text

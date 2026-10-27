@@ -521,6 +521,13 @@ def _parse_projects(lines: List[str], embedded_urls: List[str]) -> List[Dict[str
                     project["link"] = url
         if project["link"]:
             title_line = _tidy(title_line.replace(project["link"], ""))
+        # A hyperlink's visible label set apart at the end ("…, OpenRouter    Live Demo") isn't part of the title or stack
+        title_line = re.sub(
+            r"(?:\s+live\s+demo|(?:\t|\s{2,}|\s*\|\s*)(?:demo|live|github|source(?:\s+code)?|code|repo(?:sitory)?|link|website))\s*$",
+            "",
+            title_line,
+            flags=re.I,
+        )
 
         bullets: List[str] = []
         for text in extra_headers + body:

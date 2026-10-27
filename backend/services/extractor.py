@@ -235,6 +235,40 @@ def _classify_block(lines: List[str]) -> str:
 # ============================================================
 
 
+def _has_form_xobject(page: pypdf.PageObject) -> bool:
+    try:
+        xobjects = page["/Resources"].get_object().get("/XObject")
+        if not xobjects:
+            return False
+        return any(x.get_object().get("/Subtype") == "/Form" for x in xobjects.get_object().values())
+    except Exception:  # noqa: BLE001 — malformed resources just mean no recovery
+        return False
+
+
+def _recover_form_text(page: pypdf.PageObject, layout_text: str, page_num: int, filename: str) -> str:
+    """Layout mode skips text drawn inside Form XObjects (pages rewritten by some
+    PDF editors and compressors); plain mode reads it. Use plain text when it
+    finds clearly more."""
+    if not _has_form_xobject(page):
+        return layout_text
+    try:
+        plain_lines = [ln.strip() for ln in (page.extract_text() or "").split("\n") if ln.strip()]
+    except Exception:  # noqa: BLE001
+        return layout_text
+    unique = list(dict.fromkeys(plain_lines))
+    # The same form drawn many times repeats every line; otherwise keep repeats (e.g. equal dates)
+    if len(unique) < len(plain_lines) / 2:
+        plain_lines = unique
+    plain_chars = sum(len(ln.replace(" ", "")) for ln in plain_lines)
+    if plain_chars <= 1.3 * len("".join(layout_text.split())):
+        return layout_text
+    logger.warning(
+        "[EXTRACT] Page %d text is inside form XObjects; using plain mode | file=%s | layout_chars=%d | plain_chars=%d",
+        page_num, filename, len("".join(layout_text.split())), plain_chars,
+    )
+    return "\n".join(plain_lines)
+
+
 def extract_text_from_pdf(
     pdf_bytes: bytes,
     filename: str = "unknown.pdf",
@@ -314,6 +348,8 @@ def extract_text_from_pdf(
                 logger.warning("[EXTRACT] Page %d extraction failed | file=%s | error=%s", i, filename, str(plain_exc))
                 page_errors.append(f"{type(plain_exc).__name__}: {plain_exc}")
                 layout_text = ""
+        else:
+            layout_text = _recover_form_text(page, layout_text, i, filename)
 
         # Derive clean text from layout text: strip each line, join
         clean_lines = [ln.strip() for ln in layout_text.split("\n") if ln.strip()]

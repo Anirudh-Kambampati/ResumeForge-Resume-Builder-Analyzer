@@ -91,6 +91,12 @@ class DeterministicParserTests(unittest.TestCase):
         d = parse(text, [{"url": "https://github.com/samlee/habit-tracker", "page": 0}])
         self.assertEqual(d["projects"][0]["link"], "https://github.com/samlee/habit-tracker")
 
+    def test_link_label_is_not_a_technology(self):
+        for header in ("Habit Tracker | React, Python\tLive Demo", "Habit Tracker | React, Python Live Demo"):
+            d = parse(f"Sam Lee\nPROJECTS\n{header}\n• Built it.")
+            self.assertEqual(d["projects"][0]["title"], "Habit Tracker")
+            self.assertEqual(d["projects"][0]["technologies"], ["React", "Python"])
+
 
 class GuardTests(unittest.TestCase):
     def setUp(self):
@@ -128,6 +134,12 @@ class GuardTests(unittest.TestCase):
         del reviewed["languages"]
         result, _ = guard_reviewed(reviewed, self.draft, self.text)
         self.assertEqual(result["languages"], self.draft["languages"])
+
+    def test_dropped_name_is_restored(self):
+        reviewed = copy.deepcopy(self.draft)
+        reviewed["profile"]["fullName"] = ""
+        result, _ = guard_reviewed(reviewed, self.draft, self.text)
+        self.assertEqual(result["profile"]["fullName"], self.draft["profile"]["fullName"])
 
 
 class ImportPipelineTests(unittest.TestCase):
