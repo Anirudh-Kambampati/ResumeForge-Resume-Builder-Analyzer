@@ -11,7 +11,32 @@
 
 import { byokHeaders, useAiKeyStore, type AiKeyReason } from "@/store/aiKeyStore";
 
-export const API_BASE_URL =
+/**
+ * Poll /api/health until the backend (possibly cold-starting on a free
+ * host) responds. Reports progress via `onStatus`. Resolves true on success.
+ * Does not keep the server awake afterwards — one-shot warm-up only.
+ */
+export async function ensureServerAwake(
+  onStatus?: (msg: string) => void,
+  maxAttempts = 12,
+  delayMs = 5000,
+): Promise<boolean> {
+  for (let i = 0; i < maxAttempts; i++) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/health`, { method: "GET" });
+      if (res.ok) {
+        onStatus?.("");
+        return true;
+      }
+    } catch {
+      // cold start / network error — keep trying
+    }
+    onStatus?.(i === 0 ? "Server is waking up…" : "Still waking up…");
+    await new Promise((r) => setTimeout(r, delayMs));
+  }
+  onStatus?.("");
+  return false;
+}
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 /**

@@ -118,11 +118,16 @@ def _extract_resume_text(
     return result.text, result.embedded_links, result.page_count
 
 
+_cors_origins_env = os.getenv("CORS_ORIGINS", "")
+_cors_origins = [o.strip() for o in _cors_origins_env.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
     # Any localhost/dev port works in development; production is pinned to
-    # the deployed frontend (and any Vercel preview of it).
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$|^https://([a-z0-9-]+\.)?resume-forge-chi-five\.vercel\.app$",
+    # the deployed frontend (and any Vercel preview of it). Extra origins can
+    # be added via the CORS_ORIGINS env var (comma-separated).
+    allow_origins=_cors_origins,
+    allow_origin_regex=r"^https?://(localhost|127\\.0\\.0\\.1)(:\\d+)?$|^https://([a-z0-9-]+\\.)?resume-forge-chi-five\\.vercel\\.app$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

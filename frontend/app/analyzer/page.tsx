@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import ForgeLoader from "@/components/ui/ForgeLoader";
 import { normalizeError } from "@/lib/errorHelper";
-import { API_BASE_URL, ApiError, apiHeaders, toApiError } from "@/lib/api";
+import { API_BASE_URL, ApiError, apiHeaders, toApiError, ensureServerAwake } from "@/lib/api";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import AiKeyButton from "@/components/ai/AiKeyButton";
 import UseOwnKeyLink from "@/components/ai/UseOwnKeyLink";
@@ -71,6 +71,7 @@ export default function AnalyzerPage() {
 
   // Status states
   const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AnalysisData | null>(null);
   // Bumped per analysis so applied rewrites from a previous run are discarded
@@ -125,6 +126,15 @@ export default function AnalyzerPage() {
     setLoading(true);
     setError(null);
     setResult(null);
+    setStatusMsg("Server is waking up…");
+
+    const awake = await ensureServerAwake(setStatusMsg);
+    if (!awake) {
+      setError("Could not reach the ResumeForge analysis server. It may still be starting — try again in a moment.");
+      setLoading(false);
+      setStatusMsg("");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("resume", file);
@@ -173,6 +183,7 @@ export default function AnalyzerPage() {
       setError(errMsg);
     } finally {
       setLoading(false);
+      setStatusMsg("");
     }
   };
 
@@ -318,7 +329,7 @@ export default function AnalyzerPage() {
                   {loading ? (
                     <>
                       <ForgeLoader className="h-5 w-5" />
-                      Analyzing compliance...
+                      {statusMsg || "Analyzing compliance..."}
                     </>
                   ) : (
                     <>
