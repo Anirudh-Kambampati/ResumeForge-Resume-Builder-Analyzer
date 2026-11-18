@@ -37,7 +37,7 @@ export async function ensureServerAwake(
   onStatus?.("");
   return false;
 }
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 /**
  * Build headers for API requests. Includes X-Api-Key when configured, and
